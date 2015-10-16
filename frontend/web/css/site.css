@@ -11,7 +11,7 @@ body {
 }
 
 .wrap > .container {
-    padding: 70px 15px 20px;
+    padding: 100px 15px 20px;
 }
 
 .footer {
@@ -88,4 +88,15 @@ a.desc:after {
     border-left: 3px solid #eed3d7;
     padding: 10px 20px;
     margin: 0 0 15px 0;
+}
+/* ------------- MAIN STYLES ------------- */
+.navbar {
+    height: 75px;
+}
+.navbar-brand {
+    float: left;
+    height: 75px;
+    padding: 0 15px;
+    font-size: 18px;
+    line-height: 20px;
 }

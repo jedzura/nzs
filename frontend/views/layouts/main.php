@@ -28,7 +28,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => Html::img('/img/logo.png', ['title' => 'Działaj z nami']),
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -49,8 +49,13 @@ AppAsset::register($this);
             'linkOptions' => ['data-method' => 'post']
         ];
     }
+    $menuItems[] = [
+        'label' => Html::img('/img/profile.png'),
+        'url' => '',
+    ];
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
+        'encodeLabels' => false,
         'items' => $menuItems,
     ]);
     NavBar::end();
