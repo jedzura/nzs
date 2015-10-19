@@ -1,8 +1,8 @@
 {
-    "name": "yiisoft/yii2-app-advanced",
-    "description": "Yii 2 Advanced Project Template",
-    "keywords": ["yii2", "framework", "advanced", "project template"],
-    "homepage": "http://www.yiiframework.com/",
+    "name": "Działaj z nami",
+    "description": "",
+    "keywords": ["nzs", "działaj"],
+    "homepage": "http://dzialajznami.pl/",
     "type": "project",
     "license": "BSD-3-Clause",
     "support": {
@@ -17,7 +17,8 @@
         "php": ">=5.4.0",
         "yiisoft/yii2": ">=2.0.6",
         "yiisoft/yii2-bootstrap": "*",
-        "yiisoft/yii2-swiftmailer": "*"
+        "yiisoft/yii2-swiftmailer": "*",
+        "kartik-v/yii2-widget-alert": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

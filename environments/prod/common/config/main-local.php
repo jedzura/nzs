@@ -1,11 +1,12 @@
 <?php
 return [
+    'language' => 'pl-PL',
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=yii2advanced',
+            'dsn' => 'mysql:host=localhost;dbname=nzs',
             'username' => 'root',
-            'password' => '',
+            'password' => 'alfa155',
             'charset' => 'utf8',
         ],
         'mailer' => [
@@ -17,7 +18,22 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '' => 'site/index',
-                'contact' => 'site/contact',
+                'logowanie' => 'site/login',
+                'rejestracja' => 'site/signup',
+            ],
+        ],
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/messages',
+                    'sourceLanguage' => 'en-US',
+                    'fileMap' => [
+                        'btn' => 'button.php',
+                        'lbl' => 'label.php',
+                        'msg' => 'message.php',
+                    ]
+                ],
             ],
         ],
     ],

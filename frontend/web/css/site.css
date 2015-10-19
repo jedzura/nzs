@@ -1,17 +1,19 @@
 html,
 body {
     height: 100%;
+    background: url('../img/background.jpg') no-repeat fixed center top;
+    font-family: 'Lato', sans-serif;
 }
 
 .wrap {
     min-height: 100%;
     height: auto;
-    margin: 0 auto -60px;
-    padding: 0 0 60px;
+    margin: 0 auto -140px;
+    padding: 0 0 140px;
 }
 
 .wrap > .container {
-    padding: 100px 15px 20px;
+    padding: 94px 15px 20px;
 }
 
 .footer {
@@ -92,6 +94,7 @@ a.desc:after {
 /* ------------- MAIN STYLES ------------- */
 .navbar {
     height: 75px;
+    background: #191919;
 }
 .navbar-brand {
     float: left;
@@ -99,4 +102,178 @@ a.desc:after {
     padding: 0 15px;
     font-size: 18px;
     line-height: 20px;
+}
+.navbar-fixed-top {
+    border: 0;
+}
+.navbar-nav img {
+    display: block;
+}
+.navbar-nav > li > a {
+    padding: 0 15px;
+    line-height: 75px;
+    text-transform: uppercase;
+    font-weight: 700;
+    outline: none;
+}
+.navbar-inverse .navbar-nav > li > a {
+    color: #fafafa;
+}
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+    color: #fff;
+    background-color: #000;
+}
+.caret {
+    display: none;
+}
+.dropdown-menu {
+    position: absolute;
+    left: 0px;
+    padding: 0;
+    min-width: 160px;
+    text-align: left;
+    list-style: none;
+    background: #000;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+.dropdown-menu > li > a {
+    padding: 0 20px;
+    line-height: 48px;
+    font-weight: 700;
+    color: #fafafa;
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+.dropdown-menu > .active > a,
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:focus,
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+    color: #fff;
+    background-color: #f39200;
+    outline: none;
+}
+.footer {
+    height: 135px;
+    background: none;
+    border: none;
+    padding: 0;
+}
+.footer .black-block {
+    background: #191919;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+.footer .black-block img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+}
+.footer .black-block > div > div {
+    padding-top: 22px;
+    padding-bottom: 22px;
+}
+.footer .info-line {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 10px 0;
+}
+h1 {
+    text-transform: uppercase;
+    font-size: 32px;
+    font-weight: 700;
+}
+.black-panel {
+    background: #191919;
+    color: #fff;
+    padding: 50px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.black-panel label {
+    text-transform: uppercase;
+    font-size: 16px;
+}
+.black-panel .form-control {
+    border-radius: 0;
+    border: 1px solid #191919;
+    height: 50px;
+    line-height: 50px;
+    font-size: 16px;
+}
+.has-success .help-block,
+.has-success .control-label,
+.has-success .radio,
+.has-success .checkbox,
+.has-success .radio-inline,
+.has-success .checkbox-inline,
+.has-success.radio label,
+.has-success.checkbox label,
+.has-success.radio-inline label,
+.has-success.checkbox-inline label {
+    color: #96c11e;
+}
+.has-error .help-block,
+.has-error .control-label,
+.has-error .radio,
+.has-error .checkbox,
+.has-error .radio-inline,
+.has-error .checkbox-inline,
+.has-error.radio label,
+.has-error.checkbox label,
+.has-error.radio-inline label,
+.has-error.checkbox-inline label {
+    color: #bd1622;
+}
+.black-panel .has-success .form-control {
+    border: 1px solid #96c11e;
+}
+.black-panel .has-error .form-control {
+    border: 1px solid #bd1622;
+}
+.btn {
+    display: inline-block;
+    padding: 0 35px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 50px;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -moz-user-select: none;
+    background: #f28c00;
+    color: #fff;
+    text-transform: uppercase;
+    border: 0;
+    border-radius: 0;
+}
+.btn:hover {
+    background: #e27c00;
+    color: #fff;
+}
+
+
+
+
+
+
+@media (max-width: 991px) {
+    .navbar-nav > li > a {
+        padding: 0 10px;
+        line-height: 75px;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 12px;
+    }
+}
+@media (max-width: 766px) {
+    .black-panel {
+        padding: 25px;
+    }
 }

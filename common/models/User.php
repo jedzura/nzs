@@ -11,10 +11,15 @@ use yii\web\IdentityInterface;
  * User model
  *
  * @property integer $id
+ * @property integer $is_admin
  * @property string $username
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $email
+ * @property string $firstname
+ * @property string $lastname
+ * @property string $facebook
+ * @property string $twitter
  * @property string $auth_key
  * @property integer $status
  * @property integer $created_at
@@ -24,14 +29,14 @@ use yii\web\IdentityInterface;
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 10;
+    const STATUS_ACTIVE = 1;
 
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return '{{%user}}';
+        return 'user';
     }
 
     /**
@@ -50,8 +55,37 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            [['username', 'email'], 'required'],
+            [['is_admin', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['username'], 'string', 'max' => 32],
+//            [['password'], 'string', 'min' => 6],
+            [['firstname', 'lastname', 'email', 'facebook', 'twitter'], 'string', 'max' => 64],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('lbl', 'ID'),
+            'is_admin' => Yii::t('lbl', 'Is Admin'),
+            'username' => Yii::t('lbl', 'Username'),
+            'password' => Yii::t('lbl', 'Password'),
+            'password_hash' => Yii::t('lbl', 'Password hash'),
+            'password_reset_token' => Yii::t('lbl', 'Password reset token'),
+            'firstname' => Yii::t('lbl', 'Firstname'),
+            'lastname' => Yii::t('lbl', 'Lastname'),
+            'email' => Yii::t('lbl', 'Email'),
+            'facebook' => Yii::t('lbl', 'Facebook'),
+            'twitter' => Yii::t('lbl', 'Twitter'),
+            'auth_key' => Yii::t('lbl', 'Authorization key'),
+            'status' => Yii::t('lbl', 'Status'),
+            'created_at' => Yii::t('lbl', 'Create date'),
+            'updated_at' => Yii::t('lbl', 'Update date'),
         ];
     }
 
@@ -184,5 +218,13 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGroups()
+    {
+        return $this->hasMany(Group::className(), ['id' => 'group_id'])->viaTable('user_to_group', ['user_id' => 'id']);
     }
 }

@@ -3,12 +3,13 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "user".
  *
  * @property integer $id
- * @property integer $role_id
+ * @property integer $is_admin
  * @property string $username
  * @property string $password
  * @property string $firstname
@@ -25,6 +26,9 @@ use Yii;
  */
 class User extends \yii\db\ActiveRecord
 {
+    const
+        STATUS_ACTIVE = 1,
+        STATUS_DELETED = 0;
     /**
      * @inheritdoc
      */
@@ -36,14 +40,26 @@ class User extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
-            [['id', 'role_id', 'username', 'password', 'firstname', 'lastname', 'email', 'created'], 'required'],
-            [['id', 'role_id', 'status', 'created'], 'integer'],
+            [['id', 'username', 'password', 'email', 'created_at', 'updated_at'], 'required'],
+            [['id', 'is_admin', 'status', 'created_at', 'updated_at'], 'integer'],
             [['username', 'password'], 'string', 'max' => 32],
             [['firstname', 'lastname', 'email', 'facebook', 'twitter'], 'string', 'max' => 64],
-            [['id'], 'unique']
+            [['id'], 'unique'],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
     }
 
@@ -54,7 +70,7 @@ class User extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('lbl', 'ID'),
-            'role_id' => Yii::t('lbl', 'Role ID'),
+            'is_admin' => Yii::t('lbl', 'Is Admin'),
             'username' => Yii::t('lbl', 'Username'),
             'password' => Yii::t('lbl', 'Password'),
             'firstname' => Yii::t('lbl', 'Firstname'),
@@ -63,24 +79,9 @@ class User extends \yii\db\ActiveRecord
             'facebook' => Yii::t('lbl', 'Facebook'),
             'twitter' => Yii::t('lbl', 'Twitter'),
             'status' => Yii::t('lbl', 'Status'),
-            'created' => Yii::t('lbl', 'Created'),
+            'created_at' => Yii::t('lbl', 'Created'),
+            'updated_at' => Yii::t('lbl', 'Created'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRole()
-    {
-        return $this->hasOne(Role::className(), ['id' => 'role_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUserToGroups()
-    {
-        return $this->hasMany(UserToGroup::className(), ['user_id' => 'id']);
     }
 
     /**

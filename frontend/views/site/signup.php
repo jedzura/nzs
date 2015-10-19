@@ -7,29 +7,28 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Signup';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Rejestracja';
 ?>
 <div class="site-signup">
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>Please fill out the following fields to signup:</p>
-
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
-
-                <?= $form->field($model, 'username') ?>
-
-                <?= $form->field($model, 'email') ?>
-
-                <?= $form->field($model, 'password')->passwordInput() ?>
-
-                <div class="form-group">
-                    <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+    <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
+    <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="black-panel col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+                    <?= $form->field($model, 'username')->textInput() ?>
+                    <?= $form->field($model, 'email')->textInput() ?>
+                    <?= $form->field($model, 'password')->passwordInput() ?>
                 </div>
-
-            <?php ActiveForm::end(); ?>
+            </div>
         </div>
-    </div>
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+                    <div class="row">
+                        <?= Html::submitButton(Yii::t('btn', 'Sign up'), ['class' => 'btn pull-right', 'name' => 'signup-button']) ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php ActiveForm::end(); ?>
 </div>
