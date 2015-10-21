@@ -11,9 +11,13 @@ use Yii;
  */
 class SignupForm extends Model
 {
-    public $username;
-    public $email;
-    public $password;
+    public
+        $username,
+        $email,
+        $firstname,
+        $lastname,
+        $password,
+        $passwordConfirm;
 
     /**
      * @inheritdoc
@@ -32,8 +36,14 @@ class SignupForm extends Model
             ['email', 'string', 'max' => 64],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'Ten adres email jest już w użyciu.'],
 
-            ['password', 'required'],
-            ['password', 'string', 'min' => 6],
+            [['firstname', 'lastname'], 'filter', 'filter' => 'trim'],
+            [['firstname', 'lastname'], 'required'],
+            [['firstname', 'lastname'], 'string', 'min' => 2, 'max' => 64],
+
+            [['password'], 'required'],
+            [['password'], 'string', 'min' => 6],
+
+            [['passwordConfirm'], 'compare', 'compareAttribute' => 'password']
         ];
     }
 
@@ -45,7 +55,10 @@ class SignupForm extends Model
         return [
             'username' => Yii::t('lbl', 'Username'),
             'email' => Yii::t('lbl', 'Email'),
+            'firstname' => Yii::t('lbl', 'First name'),
+            'lastname' => Yii::t('lbl', 'Last name'),
             'password' => Yii::t('lbl', 'Password'),
+            'passwordConfirm' => Yii::t('lbl', 'Password confirm'),
         ];
     }
 
@@ -60,6 +73,8 @@ class SignupForm extends Model
             $user = new User();
             $user->username = $this->username;
             $user->email = $this->email;
+            $user->firstname = $this->firstname;
+            $user->lastname = $this->lastname;
             $user->is_admin = 0;
             $user->setPassword($this->password);
             $user->generateAuthKey();

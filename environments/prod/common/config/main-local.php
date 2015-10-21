@@ -12,15 +12,7 @@ return [
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@common/mail',
-        ],
-        'urlManager' =>[
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-                '' => 'site/index',
-                'logowanie' => 'site/login',
-                'rejestracja' => 'site/signup',
-            ],
+            'useFileTransport' => true,
         ],
         'i18n' => [
             'translations' => [

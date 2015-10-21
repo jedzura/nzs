@@ -11,7 +11,9 @@ use Yii;
  */
 class ResetPasswordForm extends Model
 {
-    public $password;
+    public
+        $password,
+        $passwordConfirm;
 
     /**
      * @var \common\models\User
@@ -46,6 +48,18 @@ class ResetPasswordForm extends Model
         return [
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+            [['passwordConfirm'], 'compare', 'compareAttribute' => 'password']
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'password' => Yii::t('lbl', 'Password'),
+            'passwordConfirm' => Yii::t('lbl', 'Password confirm'),
         ];
     }
 

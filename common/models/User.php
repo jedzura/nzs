@@ -24,7 +24,7 @@ use yii\web\IdentityInterface;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
- * @property string $password write-only password
+ * @property string $password
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -55,10 +55,9 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'email'], 'required'],
+            [['username', 'email', 'firstname', 'lastname'], 'required'],
             [['is_admin', 'status', 'created_at', 'updated_at'], 'integer'],
             [['username'], 'string', 'max' => 32],
-//            [['password'], 'string', 'min' => 6],
             [['firstname', 'lastname', 'email', 'facebook', 'twitter'], 'string', 'max' => 64],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],

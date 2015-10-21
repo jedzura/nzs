@@ -7,25 +7,27 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Request password reset';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = Yii::t('lbl', 'Request password reset');
 ?>
 <div class="site-request-password-reset">
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>Please fill out your email. A link to reset password will be sent there.</p>
-
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'request-password-reset-form']); ?>
-
-                <?= $form->field($model, 'email') ?>
-
-                <div class="form-group">
-                    <?= Html::submitButton('Send', ['class' => 'btn btn-primary']) ?>
+    <h1 class="text-center"><?= $this->title ?></h1>
+    <?php $form = ActiveForm::begin(['id' => 'request-password-reset-form']); ?>
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="black-panel col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+                    <p><?= Yii::t('msg', 'Please fill out your email. A link to reset password will be sent there.') ?></p>
+                    <?= $form->field($model, 'email') ?>
                 </div>
-
-            <?php ActiveForm::end(); ?>
+            </div>
         </div>
-    </div>
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+                    <div class="row">
+                        <?= Html::submitButton(Yii::t('btn', 'Send'), ['class' => 'btn pull-right']) ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php ActiveForm::end(); ?>
 </div>

@@ -83,14 +83,15 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        return $this->goHome();
         if (!\Yii::$app->user->isGuest) {
+            Alert::add(Yii::t('msg', 'You are already logged in.'), Alert::TYPE_INFO);
             return $this->goHome();
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            Alert::add(Yii::t('msg', 'You are logged in.'));
+            return $this->goHome();
         } else {
             return $this->render('login', [
                 'model' => $model,
@@ -152,7 +153,6 @@ class SiteController extends Controller
     {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
-            return $this->goHome();
             if ($user = $model->signup()) {
                 Alert::add(Yii::t('msg', 'Registration completed successfully.'));
                 if (Yii::$app->getUser()->login($user)) {
@@ -176,11 +176,10 @@ class SiteController extends Controller
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
-
+                Alert::add(Yii::t('msg', 'Check your email for further instructions.'));
                 return $this->goHome();
             } else {
-                Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for email provided.');
+                Alert::add(Yii::t('msg', 'Sorry, we are unable to reset password for email provided.'), Alert::TYPE_ERROR);
             }
         }
 
@@ -205,7 +204,7 @@ class SiteController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'New password was saved.');
+            Alert::add(Yii::t('msg', 'New password was saved. Now you can log in.'));
 
             return $this->goHome();
         }

@@ -61,7 +61,7 @@ class Alert extends \yii\bootstrap\Widget
         if (!empty($flashes))
         {
             $appendCss = isset($this->options['class']) ? ' ' . $this->options['class'] : '';
-            $reflectionClass = new \ReflectionClass ('app\widgets\Alert');
+            $reflectionClass = new \ReflectionClass ('common\widgets\Alert');
             $alertTypes = $reflectionClass->getConstants();
 
             foreach ($flashes as $type => $data) {

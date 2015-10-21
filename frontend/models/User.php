@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "user".
@@ -24,7 +25,7 @@ use yii\behaviors\TimestampBehavior;
  * @property UserToGroup[] $userToGroups
  * @property Group[] $groups
  */
-class User extends \yii\db\ActiveRecord
+class User extends ActiveRecord
 {
     const
         STATUS_ACTIVE = 1,
