@@ -18,6 +18,11 @@ a:focus {
     text-decoration: underline;
 }
 
+textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
 .wrap {
     min-height: 100%;
     height: auto;
@@ -265,7 +270,8 @@ h1 {
 .black-panel .has-error .form-control {
     border: 1px solid #bd1622;
 }
-.btn {
+.btn,
+.btn:active {
     display: inline-block;
     padding: 0 35px;
     font-size: 16px;
@@ -282,7 +288,8 @@ h1 {
     border: 0;
     border-radius: 0;
 }
-.btn:hover {
+.btn:hover,
+.btn:focus {
     background: #e27c00;
     color: #fff;
 }
@@ -393,7 +400,8 @@ article.list-item h4 {
     font-weight: 700;
     padding: 0 15px;
 }
-.button-blue:hover {
+.button-blue:hover,
+.button-blue:focus {
     background: #289ad1;
     text-decoration: none;
     color: #fff;
@@ -414,7 +422,8 @@ article.list-item h4 {
     font-size: 16px;
     padding: 40px 30px 30px;
 }
-.button-orange:hover {
+.button-orange:hover,
+.button-orange:focus {
     background: #e38200;
     text-decoration: none;
     color: #fff;

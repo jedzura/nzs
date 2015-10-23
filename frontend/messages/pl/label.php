@@ -2,7 +2,9 @@
 
 return [
     'Add your organization' => 'Dodaj swoją organizację',
+    'Body' => 'Treść',
     'City' => 'Miasto',
+    'Contact' => 'Kontakt',
     'Email' => 'Email',
     'First name' => 'Imię',
     'Interests' => 'Zainteresowania',
@@ -15,7 +17,9 @@ return [
     'Remember me' => 'Zapamiętaj mnie',
     'Reset password' => 'Zmiana hasła',
     'Request password reset' => 'Resetowanie hasła',
+    'Subject' => 'Temat',
     'Tags' => 'Tagi',
     'University' => 'Uczelnia',
-    'Username' => 'Nazwa użytkownika'
+    'Username' => 'Nazwa użytkownika',
+    'Verification code' => 'Kod weryfikacyjny',
 ];
