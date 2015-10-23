@@ -13,6 +13,7 @@ a {
 }
 a:hover,
 a:focus {
+    outline: none;
     color: #6aa7df;
     text-decoration: underline;
 }
@@ -213,6 +214,8 @@ h1 {
     text-transform: uppercase;
     font-size: 32px;
     font-weight: 700;
+    margin: 0;
+    padding: 20px 0;
 }
 .black-panel {
     background: #191919;
@@ -282,6 +285,104 @@ h1 {
 .btn:hover {
     background: #e27c00;
     color: #fff;
+}
+.tags {
+    resize: vertical;
+    min-height: 150px;
+}
+.text-core .text-wrap {
+    position: relative;
+}
+.text-core .text-wrap .text-tags {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 6px;
+    cursor: text;
+}
+.text-core .text-wrap .text-tags.text-tags-on-top {
+    z-index: 2;
+}
+.text-core .text-wrap .text-tags .text-tag {
+    float: left;
+}
+.text-core .text-wrap .text-tags .text-tag .text-button {
+    position: relative;
+    float: left;
+    background: #d1d1d1;
+    color: #fff;
+    padding: 0 42px 0 15px;
+    margin: 0 6px 6px 0;
+    cursor: pointer;
+    height: 39px;
+    line-height: 39px;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+.text-core .text-wrap .text-tags .text-tag .text-button a.text-remove {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: block;
+    width: 42px;
+    height: 39px;
+    text-align: center;
+    background: url('../img/ico_delete.png') no-repeat;
+}
+article {
+    background: #fff;
+    padding: 20px;
+    margin-top: 19px;
+    font-size: 16px;
+}
+.group-info {
+    margin-top: 19px;
+    background: #fff;
+    font-size: 14px;
+    padding: 20px;
+    text-transform: uppercase;
+}
+.group-logo {
+    padding: 0 0 10px;
+}
+.group-logo img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+}
+.group-info section {
+    padding: 0;
+}
+.group-info section h4 {
+    font-size: 16px;
+    font-weight: 700;
+}
+.group-info section p {
+    padding-left: 10px;
+}
+.button-blue {
+    background: #38aae1;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    display: block;
+    margin-top: 20px;
+    color: #fff;
+    font-weight: 700;
+    padding: 0 15px;
+}
+.button-blue:hover {
+    background: #289ad1;
+    text-decoration: none;
+    color: #fff;
+}
+.button-blue .glyphicon {
+    margin-right: 10px;
+    font-size: 24px;
+    top: 6px;
 }
 
 

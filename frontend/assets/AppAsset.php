@@ -21,6 +21,9 @@ class AppAsset extends AssetBundle
         'css/site.css',
     ];
     public $js = [
+        'js/textext.core.js',
+        'js/textext.plugin.tags.js',
+        'js/site.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

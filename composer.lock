@@ -4,9 +4,48 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2bc31ca76c79ede322d77e77f8a42b0a",
-    "content-hash": "3e488966d03fb24ea5f8103d3cb12d15",
+    "hash": "687238406a7bb0ccd31c72818ce57a6c",
+    "content-hash": "2762ca17893532aefc42545de6f7de74",
     "packages": [
+        {
+            "name": "bootstrap-select/bootstrap-select",
+            "version": "1.7.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/silviomoreto/bootstrap-select.git",
+                "reference": "460ea27c33806187a32bf4617e8943b0921efb7b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/silviomoreto/bootstrap-select/zipball/460ea27c33806187a32bf4617e8943b0921efb7b",
+                "reference": "460ea27c33806187a32bf4617e8943b0921efb7b",
+                "shasum": ""
+            },
+            "suggest": {
+                "components/jquery": ">=1.8",
+                "twbs/bootstrap": "~3.0.0"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Silvio Moreto",
+                    "homepage": "https://github.com/silviomoreto"
+                }
+            ],
+            "description": "A custom <select> for Bootstrap using button dropdown as replacement",
+            "homepage": "http://silviomoreto.github.io/bootstrap-select",
+            "keywords": [
+                "bootstrap",
+                "form",
+                "replacement",
+                "select"
+            ],
+            "time": "2015-09-30 21:01:28"
+        },
         {
             "name": "bower-asset/bootstrap",
             "version": "v3.3.5",
@@ -212,6 +251,50 @@
             "license": [
                 "MIT"
             ]
+        },
+        {
+            "name": "cakebake/yii2-bootstrap-select",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cakebake/yii2-bootstrap-select.git",
+                "reference": "9501b5732f2dc6e20daae170610178b48ce4a80d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cakebake/yii2-bootstrap-select/zipball/9501b5732f2dc6e20daae170610178b48ce4a80d",
+                "reference": "9501b5732f2dc6e20daae170610178b48ce4a80d",
+                "shasum": ""
+            },
+            "require": {
+                "bootstrap-select/bootstrap-select": "*",
+                "yiisoft/yii2-bootstrap": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "cakebake\\bootstrap\\select\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-v3"
+            ],
+            "authors": [
+                {
+                    "name": "cakebake (Jens A.)",
+                    "email": "cakebake.dev@gmail.com"
+                }
+            ],
+            "description": "A yii2 wrapper package for the custom select for @twitter bootstrap using button dropdown http://silviomoreto.github.io/bootstrap-select/3/",
+            "keywords": [
+                "bootstrap",
+                "button",
+                "select",
+                "yii",
+                "yii2"
+            ],
+            "time": "2014-09-21 17:27:31"
         },
         {
             "name": "cebe/markdown",

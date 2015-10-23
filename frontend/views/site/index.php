@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'Dzialaj z nami!';
+$this->title = 'Działaj z nami!';
 ?>
 <div class="site-index">
 

@@ -1,9 +1,16 @@
 <?php
-/* @var $this yii\web\View */
-?>
-<h1>page/index</h1>
 
-<p>
-    You may change the content of this page by modifying
-    the file <code><?= __FILE__; ?></code>.
-</p>
+/* @var $this yii\web\View */
+/* @var $model common\models\Page */
+
+use yii\bootstrap\Html;
+
+$this->title = Html::encode($model->title);
+?>
+<div class="site-page">
+    <h1><?= $this->title ?></h1>
+
+    <article>
+        <?= $model->content ? $model->content : 'Brak treści' ?>
+    </article>
+</div>

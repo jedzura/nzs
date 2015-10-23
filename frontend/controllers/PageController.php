@@ -1,6 +1,9 @@
 <?php
 
-namespace app\controllers;
+namespace frontend\controllers;
+
+use common\models\Page;
+use yii\bootstrap\Alert;
 
 class PageController extends \yii\web\Controller
 {
@@ -14,9 +17,17 @@ class PageController extends \yii\web\Controller
         return $this->render('delete');
     }
 
-    public function actionIndex()
+    public function actionIndex($url)
     {
-        return $this->render('index');
+        $model = Page::findOne(['url' => $url]);
+        if (!$model) {
+            Alert::add('Strona nie została znaleziona', Alert::TYPE_ERROR);
+            return $this->goHome();
+        }
+
+        return $this->render('index', [
+            'model' => $model
+        ]);
     }
 
     public function actionUpdate()

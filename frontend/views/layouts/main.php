@@ -35,10 +35,10 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Historia NZS', 'url' => ''],
-        ['label' => 'Lista organizacji', 'url' => ''],
-        ['label' => 'Znajdź organizację', 'url' => ''],
-        ['label' => 'Konkurs', 'url' => ''],
+        ['label' => 'Historia NZS', 'url' => ['page/index', 'url' => 'historia-nzs']],
+        ['label' => 'Lista organizacji', 'url' => ['group/list']],
+//        ['label' => 'Znajdź organizację', 'url' => ''],
+//        ['label' => 'Konkurs', 'url' => ''],
     ];
 
     if (Yii::$app->user->isGuest) {
@@ -55,8 +55,8 @@ AppAsset::register($this);
     } else {
         $subMenu = [
             [
-                'label' => Yii::t('btn', 'Settings'),
-                'url' => ['settings/index'],
+                'label' => Yii::t('btn', 'Panel'),
+                'url' => ['panel/index'],
             ],
             [
                 'label' => Yii::t('btn', 'Logout ({username})', ['username' => Yii::$app->user->identity->username]),
@@ -86,22 +86,24 @@ AppAsset::register($this);
 </div>
 
 <footer class="footer">
-    <div class="container black-block">
-        <div class="row">
-            <div class="col-xs-12 col-sm-3">
-                <?= Html::img('/img/logo_kultura_dostepna.png') ?>
-            </div>
-            <div class="col-xs-12 col-sm-6 text-center">
-                Dofinansowano ze środków narodowego centrum kultury w ramach programu kultura - interwencje 2015
-            </div>
-            <div class="col-xs-12 col-sm-3">
-                <?= Html::img('/img/logo_nzs.png') ?>
+    <div class="container">
+        <div class="black-block">
+            <div class="row">
+                <div class="col-xs-12 col-sm-3">
+                    <?= Html::img('/img/logo_kultura_dostepna.png') ?>
+                </div>
+                <div class="col-xs-12 col-sm-6 text-center">
+                    Dofinansowano ze środków narodowego centrum kultury w ramach programu kultura - interwencje 2015
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <?= Html::img('/img/logo_nzs.png') ?>
+                </div>
             </div>
         </div>
     </div>
     <div class="container text-center info-line">
-        <?= Html::a('Regulamin portalu','') ?> /
-        <?= Html::a('Polityka prywatności', '') ?> /
+<!--        --><?//= Html::a('Regulamin portalu','') ?><!-- /-->
+<!--        --><?//= Html::a('Polityka prywatności', '') ?><!-- /-->
         <?= Html::a('Kontakt', ['site/contact']) ?> /
         Copyright &copy; Niezależne Zrzeszenie Studentów /
         Wykonanie: <?= Html::a('Subinet', 'http://subinet.pl') ?>

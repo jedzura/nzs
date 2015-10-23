@@ -18,7 +18,8 @@
         "yiisoft/yii2": ">=2.0.6",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
-        "kartik-v/yii2-widget-alert": "*"
+        "kartik-v/yii2-widget-alert": "*",
+        "cakebake/yii2-bootstrap-select": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

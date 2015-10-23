@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use common\models\LoginForm;
+use common\models\University;
 use common\widgets\Alert;
 use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
@@ -11,8 +12,10 @@ use Yii;
 use yii\base\InvalidParamException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
+use yii\web\MethodNotAllowedHttpException;
 
 /**
  * Site controller
@@ -27,13 +30,8 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['logout'],
                 'rules' => [
-                    [
-                        'actions' => ['signup'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
                     [
                         'actions' => ['logout'],
                         'allow' => true,
@@ -73,7 +71,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->redirect(['group/create']);
+//        return $this->render('index');
     }
 
     /**
@@ -83,7 +82,7 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!\Yii::$app->user->isGuest) {
+        if (!Yii::$app->user->isGuest) {
             Alert::add(Yii::t('msg', 'You are already logged in.'), Alert::TYPE_INFO);
             return $this->goHome();
         }
@@ -91,12 +90,21 @@ class SiteController extends Controller
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             Alert::add(Yii::t('msg', 'You are logged in.'));
-            return $this->goHome();
-        } else {
-            return $this->render('login', [
-                'model' => $model,
-            ]);
+            if (isset(Yii::$app->session['groupToSave'])) {
+                $group = Yii::$app->session['groupToSave'];
+                if ($group->saveGroup()) {
+                    unset(Yii::$app->session['groupToSave']);
+                    Alert::add('Organizacja została pomyślnie dodana, teraz możesz w swoim panelu edytować stronę organizacji.');
+                } else {
+                    Alert::add('Coś poszło nie tak, spróbuj ponownie lub zgłoś nam zaistniały problem.', Alert::TYPE_ERROR);
+                }
+            }
+            return $this->redirect(['panel/index']);
         }
+
+        return $this->render('login', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -107,6 +115,7 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
+        Alert::add(Yii::t('msg', 'You have been logged out.'));
 
         return $this->goHome();
     }
@@ -151,12 +160,26 @@ class SiteController extends Controller
      */
     public function actionSignup()
     {
+        if (!Yii::$app->user->isGuest) {
+            Alert::add(Yii::t('msg', 'You are already logged in.'), Alert::TYPE_INFO);
+            return $this->goHome();
+        }
+
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
                 Alert::add(Yii::t('msg', 'Registration completed successfully.'));
                 if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
+                    if (isset(Yii::$app->session['groupToSave'])) {
+                        $group = Yii::$app->session['groupToSave'];
+                        if ($group->saveGroup()) {
+                            unset(Yii::$app->session['groupToSave']);
+                            Alert::add('Organizacja została pomyślnie dodana, teraz możesz w swoim panelu edytować stronę organizacji.');
+                        } else {
+                            Alert::add('Coś poszło nie tak, spróbuj ponownie lub zgłoś nam zaistniały problem.', Alert::TYPE_ERROR);
+                        }
+                    }
+                    return $this->redirect(['panel/index']);
                 }
             }
         }
@@ -212,5 +235,16 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+
+    public function actionGetUniversities()
+    {
+        $city_id = Yii::$app->request->post('city_id');
+        if (!Yii::$app->request->isAjax) {
+            throw new MethodNotAllowedHttpException();
+        }
+
+        return json_encode(ArrayHelper::map(University::find()->where(['city_id' => $city_id])->orderBy('name')->all(), 'id', 'name'));
     }
 }

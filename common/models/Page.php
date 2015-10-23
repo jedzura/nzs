@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
 use Yii;
 
@@ -30,11 +30,10 @@ class Page extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'title', 'content', 'menu', 'position', 'url'], 'required'],
-            [['id', 'menu', 'position'], 'integer'],
+            [['title', 'content', 'menu', 'position', 'url'], 'required'],
+            [['menu', 'position'], 'integer'],
             [['content'], 'string'],
             [['title', 'url'], 'string', 'max' => 256],
-            [['id'], 'unique']
         ];
     }
 
