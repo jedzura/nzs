@@ -79,7 +79,7 @@ class GroupController extends Controller
 
     public function actionList()
     {
-        $groups = Group::find()->all();
+        $groups = Group::find()->orderBy('name')->all();
 
         return $this->render('list', [
             'groups' => $groups

@@ -3,7 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Page;
-use yii\bootstrap\Alert;
+use common\widgets\Alert;
 
 class PageController extends \yii\web\Controller
 {
