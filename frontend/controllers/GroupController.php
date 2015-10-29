@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Group;
+use frontend\models\GroupSearch;
 use common\widgets\Alert;
 use Yii;
 use yii\filters\AccessControl;
@@ -47,7 +48,7 @@ class GroupController extends Controller
                 Alert::add('Organizacja została pomyślnie dodana, teraz możesz w swoim panelu edytować stronę organizacji.');
                 return $this->goHome();
             }
-            Alert::add('Coś poszło nie tak, spróbuj ponownie lub zgłoś nam zaistniały problem.', Alert::TYPE_ERROR);
+            Alert::add(Yii::t('msg', 'Something goes wrong, try again or contact us.'), Alert::TYPE_ERROR);
         }
 
         return $this->render('create', [
@@ -68,7 +69,7 @@ class GroupController extends Controller
     {
         $model = Group::findOne(['url' => $url]);
         if (!$model) {
-            Alert::add('Strona nie została znaleziona', Alert::TYPE_ERROR);
+            Alert::add(Yii::t('msg', 'Page not found.'), Alert::TYPE_ERROR);
             return $this->goHome();
         }
 
@@ -83,6 +84,25 @@ class GroupController extends Controller
 
         return $this->render('list', [
             'groups' => $groups
+        ]);
+    }
+
+    public function actionSearch()
+    {
+        $model = new GroupSearch();
+
+        $results = null;
+        if (Yii::$app->request->post()) {
+            $model->name = Yii::$app->request->post('GroupSearch')['name'];
+            $model->city_id = Yii::$app->request->post('GroupSearch')['city_id'];
+            $model->university_id = Yii::$app->request->post('GroupSearch')['university_id'];
+            $model->tag_id = Yii::$app->request->post('GroupSearch')['tag_id'];
+            $results = $model->search();
+        }
+
+        return $this->render('search', [
+            'model' => $model,
+            'results' => $results,
         ]);
     }
 

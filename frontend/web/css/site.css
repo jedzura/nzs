@@ -17,7 +17,35 @@ a:focus {
     color: #6aa7df;
     text-decoration: underline;
 }
-
+.close {
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1;
+    color: #fff;
+    text-shadow: none;
+    opacity: 1;
+    margin-top: -2px;
+}
+.alert {
+    border-radius: 0;
+    border: none;
+}
+.alert-success {
+    color: #fff;
+    background: #96c11e;
+}
+.alert-danger {
+    color: #fff;
+    background: #bd1622;
+}
+.alert-info {
+    color: #fff;
+    background: #38aae1;
+}
+.alert-warning {
+    color: #fff;
+    background: #f39200;
+}
 textarea {
     resize: vertical;
     min-height: 150px;
@@ -31,7 +59,7 @@ textarea {
 }
 
 .wrap > .container {
-    padding: 94px 15px 20px;
+    padding: 94px 15px 19px;
 }
 
 .footer {
@@ -219,26 +247,30 @@ h1 {
     text-transform: uppercase;
     font-size: 32px;
     font-weight: 700;
-    margin: 0;
+    margin: 0 0 19px;
     padding: 20px 0;
+}
+h4 {
+    text-transform: uppercase;
+    margin: 0 0 19px;
 }
 .black-panel {
     background: #191919;
     color: #fff;
     padding: 50px;
-    margin-top: 25px;
-    margin-bottom: 25px;
+    margin-bottom: 19px;
 }
-.black-panel label {
+label {
     text-transform: uppercase;
     font-size: 16px;
 }
-.black-panel .form-control {
+.form-control {
     border-radius: 0;
     border: 1px solid #191919;
     height: 50px;
     line-height: 50px;
     font-size: 16px;
+    box-shadow: none;
 }
 .has-success .help-block,
 .has-success .control-label,
@@ -342,7 +374,7 @@ h1 {
 article {
     background: #fff;
     padding: 20px;
-    margin-top: 19px;
+    margin-bottom: 19px;
     font-size: 16px;
 }
 article.list-item {
@@ -365,7 +397,6 @@ article.list-item h4 {
     padding: 10px 0;
 }
 .group-info {
-    margin-top: 19px;
     background: #fff;
     font-size: 14px;
     padding: 20px;
@@ -428,6 +459,48 @@ article.list-item h4 {
     text-decoration: none;
     color: #fff;
 }
+.panel-menu {
+    background: #fff;
+    margin-bottom: 19px;
+}
+.panel-menu.nav > li > a {
+    text-transform: uppercase;
+    line-height: 30px;
+    color: #191919;
+}
+.panel-menu.nav > li.active > a {
+    background: #191919;
+    color: #fff;
+}
+.panel-menu.nav > li > a:hover,
+.panel-menu.nav > li > a:focus {
+    background: #000;
+    color: #fff;
+}
+.searchbox {
+    background: #296caa;
+}
+.searchbox .form-control {
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+.searchbox .btn {
+    width: 100%;
+    padding: 0;
+    text-align: center;
+}
+.searchbox .form-group {
+    margin: 15px;
+}
+article .form-control {
+    border-color: #bbb;
+}
+
 
 
 

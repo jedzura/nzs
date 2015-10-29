@@ -35,10 +35,10 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Historia NZS', 'url' => ['page/index', 'url' => 'historia-nzs']],
-        ['label' => 'Lista organizacji', 'url' => ['group/list']],
-//        ['label' => 'Znajdź organizację', 'url' => ''],
-//        ['label' => 'Konkurs', 'url' => ''],
+        ['label' => Yii::t('btn', 'NZS history'), 'url' => ['page/index', 'url' => 'historia-nzs']],
+        ['label' => Yii::t('btn', 'Organizations list'), 'url' => ['group/list']],
+        ['label' => Yii::t('btn', 'Find organization'), 'url' => ['group/search']],
+        ['label' => Yii::t('btn', 'Contest'), 'url' => ['page/index', 'url' => 'konkurs']],
     ];
 
     if (Yii::$app->user->isGuest) {
@@ -102,9 +102,9 @@ AppAsset::register($this);
         </div>
     </div>
     <div class="container text-center info-line">
-<!--        --><?//= Html::a('Regulamin portalu','') ?><!-- /-->
-<!--        --><?//= Html::a('Polityka prywatności', '') ?><!-- /-->
-        <?= Html::a('Kontakt', ['site/contact']) ?> /
+        <?= Html::a(Yii::t('btn', 'Terms of service'), ['page/index', 'url' => 'regulamin-portalu']) ?> /
+        <?= Html::a(Yii::t('btn', 'Privacy policy'), ['page/index', 'url' => 'polityka-prywatnosci']) ?> /
+        <?= Html::a(Yii::t('btn', 'Contact'), ['site/contact']) ?> /
         Copyright &copy; Niezależne Zrzeszenie Studentów /
         Wykonanie: <?= Html::a('Subinet', 'http://subinet.pl') ?>
     </div>
