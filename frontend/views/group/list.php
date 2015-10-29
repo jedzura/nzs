@@ -6,7 +6,7 @@
 use yii\bootstrap\Html;
 use yii\helpers\ArrayHelper;
 
-$this->title = Yii::t('lbl', 'Lista organizacji');
+$this->title = Yii::t('lbl', 'Organizations list');
 ?>
 <div class="site-list">
     <h1><?= $this->title ?></h1>
@@ -20,11 +20,15 @@ $this->title = Yii::t('lbl', 'Lista organizacji');
                     <h4><?= $group->name ?></h4>
                     <p class="text-blue"><?= $group->short ?></p>
                     <p class="hash-tags">
-                    <?= '#' . implode(' #', ArrayHelper::map($group->tags, 'id', 'name')); ?>
+                        <?php
+                            if ($group->tags) {
+                                echo '#' . implode(' #', ArrayHelper::map($group->tags, 'id', 'name'));
+                            }
+                        ?>
                     </p>
                 </div>
                 <div class="col-xs-12 col-sm-3">
-                    <?= Html::a('Zobacz<br>stronę', ['group/index', 'url' => $group->url], ['class' => 'button-orange']) ?>
+                    <?= Html::a(Yii::t('btn', 'See<br>page'), ['group/index', 'url' => $group->url], ['class' => 'button-orange']) ?>
                 </div>
             </div>
         </article>

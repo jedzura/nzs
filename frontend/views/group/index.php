@@ -48,7 +48,7 @@ $this->title = Html::encode($model->name);
         </div>
         <div class="col-xs-12 col-sm-8 col-md-9">
             <article>
-                <?= $model->content ? $model->content : 'Brak opisu organizacji' ?>
+                <?= $model->content ? \yii\helpers\HtmlPurifier::process($model->content) : 'Brak opisu organizacji' ?>
             </article>
         </div>
     </div>

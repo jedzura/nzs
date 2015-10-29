@@ -24,12 +24,17 @@ use yii\web\IdentityInterface;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
- * @property string $password
+ * @property string $newPassword
+ * @property string $passwordConfirm
  */
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 1;
+
+    public
+        $newPassword,
+        $passwordConfirm;
 
     /**
      * @inheritdoc
@@ -55,13 +60,32 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'email', 'firstname', 'lastname'], 'required'],
+            [['email', 'firstname', 'lastname'], 'required', 'on' => 'update'],
             [['is_admin', 'status', 'created_at', 'updated_at'], 'integer'],
             [['username'], 'string', 'max' => 32],
+            [['email'], 'filter', 'filter' => 'trim'],
+            [['email'], 'email'],
             [['firstname', 'lastname', 'email', 'facebook', 'twitter'], 'string', 'max' => 64],
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            [['status'], 'default', 'value' => self::STATUS_ACTIVE],
+            [['status'], 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            [['newPassword'], 'string', 'min' => 6],
+            [['passwordConfirm'], 'required', 'when' => function($model)
+            {
+                return !empty($model->newPassword);
+            }, 'whenClient' => "function (attribute, value)
+            {
+                return $('#user-newpassword').val() !== '';
+            }"],
+            [['passwordConfirm'], 'compare', 'compareAttribute' => 'newPassword'],
         ];
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['update'] = ['firstname', 'lastname', 'email', 'facebook', 'twitter', 'newPassword', 'passwordConfirm'];
+
+        return $scenarios;
     }
 
     /**
@@ -73,11 +97,10 @@ class User extends ActiveRecord implements IdentityInterface
             'id' => Yii::t('lbl', 'ID'),
             'is_admin' => Yii::t('lbl', 'Is Admin'),
             'username' => Yii::t('lbl', 'Username'),
-            'password' => Yii::t('lbl', 'Password'),
             'password_hash' => Yii::t('lbl', 'Password hash'),
             'password_reset_token' => Yii::t('lbl', 'Password reset token'),
-            'firstname' => Yii::t('lbl', 'Firstname'),
-            'lastname' => Yii::t('lbl', 'Lastname'),
+            'firstname' => Yii::t('lbl', 'First name'),
+            'lastname' => Yii::t('lbl', 'Last name'),
             'email' => Yii::t('lbl', 'Email'),
             'facebook' => Yii::t('lbl', 'Facebook'),
             'twitter' => Yii::t('lbl', 'Twitter'),
@@ -85,6 +108,8 @@ class User extends ActiveRecord implements IdentityInterface
             'status' => Yii::t('lbl', 'Status'),
             'created_at' => Yii::t('lbl', 'Create date'),
             'updated_at' => Yii::t('lbl', 'Update date'),
+            'newPassword' => Yii::t('lbl', 'New password'),
+            'passwordConfirm' => Yii::t('lbl', 'Password confirm'),
         ];
     }
 

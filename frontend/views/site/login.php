@@ -15,14 +15,14 @@ $this->title = Yii::t('lbl', 'Login form');
         <div class="col-xs-12">
             <div class="row">
                 <div class="black-panel col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-                    <?= $form->field($model, 'username') ?>
+                    <?= $form->field($model, 'username', ['inputOptions' => ['autofocus' => 'autofocus']]) ?>
                     <?= $form->field($model, 'password')->passwordInput() ?>
                     <?= $form->field($model, 'rememberMe')->checkbox() ?>
                     <div style="margin:1em 0">
                         <?= Yii::t('msg', 'If you forgot your password you can {link}.', ['link' => Html::a(Yii::t('msg', 'reset it'), ['site/request-password-reset'])]) ?>
                     </div>
                     <div style="margin:1em 0">
-                        <?= Yii::t('msg', 'Nie masz jeszcze konta? {link}.', ['link' => Html::a(Yii::t('msg', 'Zarejestruj się tutaj!'), ['site/signup'])]) ?>
+                        <?= Yii::t('msg', 'Nie masz jeszcze konta? {link}.', ['link' => Html::a(Yii::t('msg', 'Zarejestruj się tutaj!'), ['site/'])]) ?>
                     </div>
                 </div>
             </div>

@@ -74,10 +74,22 @@ class Group extends \yii\db\ActiveRecord
 
     public function saveGroup()
     {
-        $clean = preg_replace("/[^a-zA-Z0-9\/_|+ -]/", '', $this->name);
-        $clean = strtolower(trim($clean, '-'));
-        $clean = preg_replace("/[\/_|+ -]+/", '-', $clean);
-        $this->url = $clean;
+        $cleanUrl = preg_replace("/[^a-zA-Z0-9\/_|+ -]/", '', $this->name);
+        $cleanUrl = strtolower(trim($cleanUrl, '-'));
+        $cleanUrl = preg_replace("/[\/_|+ -]+/", '-', $cleanUrl);
+        $this->url = $cleanUrl;
+
+        $urlExists = Group::findOne(['url' => $cleanUrl]);
+        if ($urlExists) {
+            if ($this->isNewRecord) {
+                $lastGroup = Group::find()->orderBy(['id' => SORT_DESC])->one();
+                $this->url = $lastGroup->id++ . '-' . $this->url;
+            } else {
+                if ($urlExists->id !== $this->id) {
+                    $this->url = $this->id . '-' . $this->url;
+                }
+            }
+        }
 
         if (!$this->save()) {
             return false;
