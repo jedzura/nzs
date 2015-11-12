@@ -27,7 +27,9 @@ use yii\helpers\Html;
  */
 class Group extends \yii\db\ActiveRecord
 {
-    public $tag;
+    public
+        $logo,
+        $tag;
 
     /**
      * @inheritdoc
@@ -49,6 +51,7 @@ class Group extends \yii\db\ActiveRecord
             [['email'], 'email'],
             [['email'], 'string', 'max' => 64],
             [['short', 'name', 'url'], 'string', 'max' => 256],
+            [['logo'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -123,6 +126,59 @@ class Group extends \yii\db\ActiveRecord
         }
 
         return false;
+    }
+
+    public function updateGroup()
+    {
+        $cleanUrl = preg_replace("/[^a-zA-Z0-9\/_|+ -]/", '', $this->name);
+        $cleanUrl = strtolower(trim($cleanUrl, '-'));
+        $cleanUrl = preg_replace("/[\/_|+ -]+/", '-', $cleanUrl);
+        $this->url = $cleanUrl;
+
+        $urlExists = Group::findOne(['url' => $cleanUrl]);
+        if ($urlExists) {
+            if ($urlExists->id !== $this->id) {
+                $this->url = $this->id . '-' . $this->url;
+            }
+        }
+
+        if ($this->logo) {
+            $this->has_logo = 1;
+        }
+
+        if (!$this->save()) {
+            return false;
+        }
+
+        if ($this->logo) {
+            $this->logo->saveAs('logo/' . $this->id . '.jpg');
+        }
+
+        $tagToGroup = TagToGroup::find()->where(['group_id' => $this->id])->all();
+        foreach ($tagToGroup as $tag) {
+            $tag->delete();
+        }
+        $tags = explode(',', str_replace(['[', ']', '\''], ['', '', ''], $this->tag));
+        foreach($tags as $tag) {
+            $newTag = Tag::findOne(['name' => strtolower($tag)]);
+            if (!$newTag) {
+                $newTag = new Tag();
+                $newTag->name = strtolower($tag);
+                if ($newTag->save()) {
+                    $tagToGroup = new TagToGroup();
+                    $tagToGroup->tag_id = $newTag->id;
+                    $tagToGroup->group_id = $this->id;
+                    $tagToGroup->save();
+                }
+            } else {
+                $tagToGroup = new TagToGroup();
+                $tagToGroup->tag_id = $newTag->id;
+                $tagToGroup->group_id = $this->id;
+                $tagToGroup->save();
+            }
+        }
+
+        return true;
     }
 
     /**

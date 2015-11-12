@@ -10,7 +10,7 @@ $(function()
             $.ajax({
                 type     :'post',
                 cache    : false,
-                url  : 'site/get-universities',
+                url  : '/site/get-universities',
                 data : {city_id : that.val()},
                 success  : function(response) {
                     response = JSON.parse(response);

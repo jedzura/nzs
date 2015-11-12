@@ -6,9 +6,9 @@
 
 use common\models\City;
 use common\models\University;
+use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
 
 $this->title = Yii::t('lbl', 'Add your organization');
 

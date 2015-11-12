@@ -184,10 +184,10 @@ a.desc:after {
     margin-top: 21px;
     margin-bottom: 20px;
 }
-.caret {
+nav .caret {
     display: none;
 }
-.dropdown-menu {
+nav .dropdown-menu {
     position: absolute;
     left: 0px;
     padding: 0;
@@ -199,7 +199,7 @@ a.desc:after {
     border-radius: 0;
     box-shadow: none;
 }
-.dropdown-menu > li > a {
+nav .dropdown-menu > li > a {
     padding: 0 20px;
     line-height: 48px;
     font-weight: 700;
@@ -207,11 +207,11 @@ a.desc:after {
     white-space: nowrap;
     text-transform: uppercase;
 }
-.dropdown-menu > .active > a,
-.dropdown-menu > .active > a:hover,
-.dropdown-menu > .active > a:focus,
-.dropdown-menu > li > a:hover,
-.dropdown-menu > li > a:focus {
+nav .dropdown-menu > .active > a,
+nav .dropdown-menu > .active > a:hover,
+nav .dropdown-menu > .active > a:focus,
+nav .dropdown-menu > li > a:hover,
+nav .dropdown-menu > li > a:focus {
     color: #fff;
     background-color: #f39200;
     outline: none;
@@ -500,9 +500,20 @@ article.list-item h4 {
 article .form-control {
     border-color: #bbb;
 }
-
-
-
+.note-editor {
+    border: 1px solid #ddd;
+    border-radius: 0;
+    overflow: visible;
+}
+.note-editable {
+    height: auto;
+    min-height: 400px;
+}
+.note-editor .btn,
+.note-editor .btn:active {
+    padding: 0 12px;
+    line-height: 32px;
+}
 
 
 
@@ -525,7 +536,7 @@ article .form-control {
         line-height: 60px;
         font-size: 14px;
     }
-    .dropdown-menu {
+    nav .dropdown-menu {
         display: block;
         position: static;
         float: none;
@@ -535,18 +546,18 @@ article .form-control {
         border: 0px none;
         box-shadow: none;
     }
-    .dropdown-toggle {
+    nav .dropdown-toggle {
         display: none !important;
     }
-    .dropdown-menu > li > a {
+    nav .dropdown-menu > li > a {
         padding: 0 15px;
         line-height: 60px;
     }
-    .dropdown-menu > .active > a,
-    .dropdown-menu > .active > a:hover,
-    .dropdown-menu > .active > a:focus,
-    .dropdown-menu > li > a:hover,
-    .dropdown-menu > li > a:focus {
+    nav .dropdown-menu > .active > a,
+    nav .dropdown-menu > .active > a:hover,
+    nav .dropdown-menu > .active > a:focus,
+    nav .dropdown-menu > li > a:hover,
+    nav .dropdown-menu > li > a:focus {
         color: #fff;
         background-color: #000;
         outline: none;

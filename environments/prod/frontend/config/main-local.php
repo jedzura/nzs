@@ -23,7 +23,7 @@ return [
                 'profil' => 'user/update',
                 'wyloguj' => 'site/logout',
                 'zmiana-hasla/<token:\w+>' => 'site/reset-password',
-                'znajdz-organizacje' => 'group/search',
+                    'znajdz-organizacje' => 'group/search',
                 '<url:[\-\w]+>' => 'page/index',
             ],
         ],

@@ -38,7 +38,7 @@ AppAsset::register($this);
         ['label' => Yii::t('btn', 'NZS history'), 'url' => ['page/index', 'url' => 'historia-nzs']],
         ['label' => Yii::t('btn', 'Organizations list'), 'url' => ['group/list']],
         ['label' => Yii::t('btn', 'Find organization'), 'url' => ['group/search']],
-        ['label' => Yii::t('btn', 'Contest'), 'url' => ['page/index', 'url' => 'konkurs']],
+        ['label' => Yii::t('btn', 'Contest'), 'url' => 'https://www.facebook.com/nzsorg/?sk=app_395026457225139'],
     ];
 
     if (Yii::$app->user->isGuest) {

@@ -48,7 +48,16 @@ $this->title = Html::encode($model->name);
         </div>
         <div class="col-xs-12 col-sm-8 col-md-9">
             <article>
-                <?= $model->content ? \yii\helpers\HtmlPurifier::process($model->content) : 'Brak opisu organizacji' ?>
+                <?php
+                    $config = HTMLPurifier_Config::createDefault();
+                    $config->set('Core.RemoveInvalidImg',true);
+                    $config->set('Attr.DefaultImageAlt','');
+
+                    HTMLPurifier_URISchemeRegistry::instance()->register('data', new HTMLPurifier_URIScheme_data());
+
+                    $purifier = new HTMLPurifier($config);
+                ?>
+                <?= $model->content ? $purifier->purify($model->content) : 'Brak opisu organizacji' ?>
             </article>
         </div>
     </div>

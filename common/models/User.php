@@ -247,8 +247,8 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getGroups()
+    public function getHisGroups()
     {
-        return $this->hasMany(Group::className(), ['id' => 'group_id'])->viaTable('user_to_group', ['user_id' => 'id']);
+        return $this->hasMany(Group::className(), ['id' => 'group_id'])->viaTable('user_to_group', ['user_id' => 'id'])->where(['group_admin' => $this->id]);
     }
 }

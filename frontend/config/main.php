@@ -29,5 +29,10 @@ return [
             'errorAction' => 'site/error',
         ],
     ],
+    'modules' => [
+        'gridview' =>  [
+            'class' => '\kartik\grid\Module',
+        ]
+    ],
     'params' => $params,
 ];

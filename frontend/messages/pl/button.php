@@ -2,6 +2,8 @@
 
 return [
     'Contact' => 'Kontakt',
+    'Delete' => 'Usuń',
+    'Edit' => 'Edytuj',
     'Find organization' => 'Znajdź organizację',
     'Join' => 'Dołącz',
     'Contest' => 'Konkurs',
