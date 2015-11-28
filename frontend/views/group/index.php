@@ -40,24 +40,21 @@ $this->title = Html::encode($model->name);
                         <p><?= $tags ?></p>
                     </section>
                 <?php endif; ?>
-                <?php if ($model->email): ?>
-                <?= Html::a(Html::icon('envelope') . Yii::t('btn', 'Write to us'), ['group/mail', 'url' => $model->url], ['class' => 'button-blue']) ?>
-                <?php endif; ?>
-                <?= Html::a(Html::icon('plus') . Yii::t('btn', 'Join'), ['group/join', 'url' => $model->url], ['class' => 'button-blue']) ?>
+                <?php
+                    if ($model->email) {
+                        echo Html::a(Html::icon('envelope') . Yii::t('btn', 'Write to us'), ['group/mail', 'url' => $model->url], ['class' => 'button-blue']);
+                    }
+                    if (!Yii::$app->user->isGuest && $model->isMember()) {
+                        echo Html::a(Html::icon('minus') . Yii::t('btn', 'Leave'), ['group/leave', 'url' => $model->url], ['class' => 'button-grey']);
+                    } else {
+                        echo Html::a(Html::icon('plus') . Yii::t('btn', 'Join'), ['group/join', 'url' => $model->url], ['class' => 'button-blue']);
+                    }
+                ?>
             </div>
         </div>
         <div class="col-xs-12 col-sm-8 col-md-9">
             <article>
-                <?php
-                    $config = HTMLPurifier_Config::createDefault();
-                    $config->set('Core.RemoveInvalidImg',true);
-                    $config->set('Attr.DefaultImageAlt','');
-
-                    HTMLPurifier_URISchemeRegistry::instance()->register('data', new HTMLPurifier_URIScheme_data());
-
-                    $purifier = new HTMLPurifier($config);
-                ?>
-                <?= $model->content ? $purifier->purify($model->content) : 'Brak opisu organizacji' ?>
+                <?= $model->content ? $model->content : Yii::t('msg', 'No description') ?>
             </article>
         </div>
     </div>

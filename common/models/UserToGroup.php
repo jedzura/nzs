@@ -11,6 +11,7 @@ use Yii;
  * @property integer $group_id
  * @property integer $can_edit
  * @property integer $group_admin
+ * @property integer $status 1 - active, 0 - waiting for accept/decline
  *
  */
 class UserToGroup extends \yii\db\ActiveRecord
@@ -44,6 +45,7 @@ class UserToGroup extends \yii\db\ActiveRecord
             'group_id' => Yii::t('lbl', 'Group'),
             'can_edit' => Yii::t('lbl', 'Can edit'),
             'group_admin' => Yii::t('lbl', 'Group admin'),
+            'status' => Yii::t('lbl', 'Status'),
         ];
     }
 }

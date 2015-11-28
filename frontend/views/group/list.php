@@ -5,6 +5,7 @@
 
 use yii\bootstrap\Html;
 use yii\helpers\ArrayHelper;
+use yii\helpers\HtmlPurifier;
 
 $this->title = Yii::t('lbl', 'Organizations list');
 ?>
@@ -18,7 +19,7 @@ $this->title = Yii::t('lbl', 'Organizations list');
                 </div>
                 <div class="col-xs-12 col-sm-6">
                     <h4><?= $group->name ?></h4>
-                    <p class="text-blue"><?= $group->short ?></p>
+                    <p class="text-blue"><?= HtmlPurifier::process($group->short) ?></p>
                     <p class="hash-tags">
                         <?php
                             if ($group->tags) {

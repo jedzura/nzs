@@ -36,26 +36,26 @@ class GroupController extends Controller
 
     public function actionCreate()
     {
-        $model = new Group();
+        $group = new Group();
 
-        if ($model->load(Yii::$app->request->post()))
+        if ($group->load(Yii::$app->request->post()))
         {
-            $model->tag = str_replace('"', '\'', Yii::$app->request->post()['Group']['tag']);
+            $group->tag = str_replace('"', '\'', Yii::$app->request->post()['Group']['tag']);
             if (Yii::$app->user->isGuest) {
-                Yii::$app->session['groupToSave'] = $model;
+                Yii::$app->session['groupToSave'] = $group;
                 Alert::add(Yii::t('msg', 'Zaloguj się lub zarejestruj, aby dokończyć dodawanie organizacji.'), Alert::TYPE_INFO);
                 return $this->redirect(['site/login']);
             }
-            if ($model->saveGroup()) {
+            if ($group->saveGroup()) {
 //            Alert::add(Yii::t('msg', 'Organization successfully added, now it must be accepted by administrator.'));
-                Alert::add('Organizacja została pomyślnie dodana, teraz możesz w swoim panelu edytować stronę organizacji.');
+                Alert::add('msg', 'Operation completed successfully. Now you can edit your organization details in user panel.');
                 return $this->goHome();
             }
             Alert::add(Yii::t('msg', 'Something goes wrong, try again or contact us.'), Alert::TYPE_ERROR);
         }
 
         return $this->render('create', [
-            'model' => $model
+            'model' => $group
         ]);
     }
 
@@ -66,12 +66,12 @@ class GroupController extends Controller
         /** @var \common\models\Group $group */
         $group = Group::findOne($id);
         if (!$group) {
-            Alert::add(Yii::t('msg', 'Not found.'), Alert::TYPE_ERROR);
+            Alert::add(Yii::t('msg', 'Organization not found.'), Alert::TYPE_ERROR);
             return $this->redirect(['group/user-group-list']);
         }
-        $canEdit = UserToGroup::find()->where(['group_id' => $id, 'user_id' => $user->id, 'can_edit' => 1])->one();
+        $canEdit = UserToGroup::findOne(['group_id' => $id, 'user_id' => $user->id, 'can_edit' => 1]);
         if (!$canEdit && !$user->is_admin) {
-            Alert::add('Nie masz uprawnień by usunąć tą organizację.', Alert::TYPE_ERROR);
+            Alert::add(Yii::t('msg', 'You have no permission for this action.'), Alert::TYPE_ERROR);
             return $this->redirect(['group/user-group-list']);
         }
 
@@ -90,14 +90,14 @@ class GroupController extends Controller
      */
     public function actionIndex($url)
     {
-        $model = Group::findOne(['url' => $url]);
-        if (!$model) {
-            Alert::add(Yii::t('msg', 'Page not found.'), Alert::TYPE_ERROR);
+        $group = Group::findOne(['url' => $url]);
+        if (!$group) {
+            Alert::add(Yii::t('msg', 'Organization not found.'), Alert::TYPE_ERROR);
             return $this->goHome();
         }
 
         return $this->render('index', [
-            'model' => $model
+            'model' => $group
         ]);
     }
 
@@ -112,19 +112,19 @@ class GroupController extends Controller
 
     public function actionSearch()
     {
-        $model = new GroupSearch();
+        $groupSearch = new GroupSearch();
 
         $results = null;
         if (Yii::$app->request->post()) {
-            $model->name = Yii::$app->request->post('GroupSearch')['name'];
-            $model->city_id = Yii::$app->request->post('GroupSearch')['city_id'];
-            $model->university_id = Yii::$app->request->post('GroupSearch')['university_id'];
-            $model->tag_id = Yii::$app->request->post('GroupSearch')['tag_id'];
-            $results = $model->search();
+            $groupSearch->name = Yii::$app->request->post('GroupSearch')['name'];
+            $groupSearch->city_id = Yii::$app->request->post('GroupSearch')['city_id'];
+            $groupSearch->university_id = Yii::$app->request->post('GroupSearch')['university_id'];
+            $groupSearch->tag_id = Yii::$app->request->post('GroupSearch')['tag_id'];
+            $results = $groupSearch->search();
         }
 
         return $this->render('search', [
-            'model' => $model,
+            'model' => $groupSearch,
             'results' => $results,
         ]);
     }
@@ -134,7 +134,7 @@ class GroupController extends Controller
         $user = Yii::$app->user->getIdentity();
         $group = Group::find()->leftJoin(UserToGroup::tableName() . ' AS utg', ['user_id' => $user->id])->where(['group.id' => $id, 'can_edit' => 1])->one();
         if (!$group) {
-            Alert::add('Nie masz uprawnień do edytowania tej organizacji.', Alert::TYPE_ERROR);
+            Alert::add(Yii::t('msg', 'You have no permission for this action.'), Alert::TYPE_ERROR);
             return $this->goHome();
         }
 
@@ -142,8 +142,10 @@ class GroupController extends Controller
             $group->tag = str_replace('"', '\'', Yii::$app->request->post()['Group']['tag']);
             $group->logo = UploadedFile::getInstance($group, 'logo');
             if ($group->updateGroup()) {
-                Alert::add('Zmiany pomyślnie zapisane.');
+                Alert::add(Yii::t('msg', 'Operation completed successfully.'));
                 return $this->redirect(['group/user-group-list']);
+            } else {
+                Alert::add(Yii::t('msg', 'Something goes wrong, try again or contact us.'), Alert::TYPE_ERROR);
             }
         }
 
@@ -186,4 +188,69 @@ class GroupController extends Controller
         ]);
     }
 
+    public function actionJoin($url)
+    {
+        $group = Group::findOne(['url' => $url]);
+        if (!$group) {
+            Alert::add(Yii::t('msg', 'Organization not found.'), Alert::TYPE_ERROR);
+            return $this->goHome();
+        }
+        $user = Yii::$app->user->getIdentity();
+        $userToGroup = UserToGroup::findOne(['group_id' => $group->id, 'user_id' => $user->id]);
+        if ($userToGroup) {
+            if (!$userToGroup->status) {
+                Alert::add(Yii::t('msg', 'Your request for joining this organization is waiting for organization admin to accept.'), Alert::TYPE_INFO);
+            } else {
+                Alert::add(Yii::t('msg', 'Your are already a member of this organization.'), Alert::TYPE_INFO);
+            }
+        } else {
+            $userToGroup = new UserToGroup();
+            $userToGroup->user_id = $user->id;
+            $userToGroup->group_id = $group->id;
+            $userToGroup->group_admin = 0;
+            $userToGroup->can_edit = 0;
+            if ($userToGroup->save()) {
+                Alert::add(Yii::t('msg', 'Your request for joining this organization is waiting for organization admin to accept.'));
+            } else {
+                Alert::add(Yii::t('msg', 'Something goes wrong, try again or contact us.'), Alert::TYPE_ERROR);
+            }
+        }
+
+        return $this->redirect(['group/index', 'url' => $url]);
+    }
+
+    public function actionLeave($url)
+    {
+        $group = Group::findOne(['url' => $url]);
+        if (!$group) {
+            Alert::add(Yii::t('msg', 'Organization not found.'), Alert::TYPE_ERROR);
+            return $this->goHome();
+        }
+        $user = Yii::$app->user->getIdentity();
+        $userToGroup = UserToGroup::findOne(['group_id' => $group->id, 'user_id' => $user->id]);
+        if (!$userToGroup) {
+            Alert::add(Yii::t('msg', 'Your are not a member of this organization.'), Alert::TYPE_INFO);
+        } else {
+            if ($userToGroup->delete()) {
+                Alert::add(Yii::t('msg', 'Operation completed successfully.'));
+            } else {
+                Alert::add(Yii::t('msg', 'Something goes wrong, try again or contact us.'), Alert::TYPE_ERROR);
+            }
+        }
+
+        return $this->redirect(['group/index', 'url' => $url]);
+    }
+
+    public function actionContact($url)
+    {
+        $group = Group::findOne(['url' => $url]);
+        if (!$group) {
+            Alert::add(Yii::t('msg', 'Organization not found.'), Alert::TYPE_ERROR);
+            return $this->goHome();
+        }
+        if (!$group->email) {
+            Alert::add(Yii::t('msg', 'This organization does not have any contact email.'), Alert::TYPE_INFO);
+            
+        }
+    }
 }

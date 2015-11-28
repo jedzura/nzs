@@ -2,10 +2,8 @@
 
 namespace common\models;
 
-use common\models\Tag;
-use common\models\University;
+use common\helpers\Tools;
 use Yii;
-use yii\helpers\Html;
 
 /**
  * This is the model class for table "group".
@@ -77,12 +75,9 @@ class Group extends \yii\db\ActiveRecord
 
     public function saveGroup()
     {
-        $cleanUrl = preg_replace("/[^a-zA-Z0-9\/_|+ -]/", '', $this->name);
-        $cleanUrl = strtolower(trim($cleanUrl, '-'));
-        $cleanUrl = preg_replace("/[\/_|+ -]+/", '-', $cleanUrl);
-        $this->url = $cleanUrl;
+        $this->url = Tools::getCleanUrl($this->name);
 
-        $urlExists = Group::findOne(['url' => $cleanUrl]);
+        $urlExists = Group::findOne(['url' => $this->url]);
         if ($urlExists) {
             if ($this->isNewRecord) {
                 $lastGroup = Group::find()->orderBy(['id' => SORT_DESC])->one();
@@ -130,12 +125,9 @@ class Group extends \yii\db\ActiveRecord
 
     public function updateGroup()
     {
-        $cleanUrl = preg_replace("/[^a-zA-Z0-9\/_|+ -]/", '', $this->name);
-        $cleanUrl = strtolower(trim($cleanUrl, '-'));
-        $cleanUrl = preg_replace("/[\/_|+ -]+/", '-', $cleanUrl);
-        $this->url = $cleanUrl;
+        $this->url = Tools::getCleanUrl($this->name);
 
-        $urlExists = Group::findOne(['url' => $cleanUrl]);
+        $urlExists = Group::findOne(['url' => $this->url]);
         if ($urlExists) {
             if ($urlExists->id !== $this->id) {
                 $this->url = $this->id . '-' . $this->url;
@@ -224,5 +216,23 @@ class Group extends \yii\db\ActiveRecord
     public function getUsers()
     {
         return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('user_to_group', ['group_id' => 'id']);
+    }
+
+    public function isMember()
+    {
+        $user = Yii::$app->user->getIdentity();
+        $isMember = UserToGroup::findOne(['group_id' => $this->id, 'user_id' => $user->id]);
+        return $isMember ? true : false;
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            $this->content = Tools::cleanContent($this->content);
+
+            return true;
+        }
+
+        return false;
     }
 }
